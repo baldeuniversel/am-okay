@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Utility
+Name=am-okay
+Comment=A utility program to dynamically copy/move files/dirs 
+Icon=io.github.baldeuniversel.am-okay
+Terminal=True
+Exec=am-okay
+Categories=Utility;FileTools
+Keywords=Linux;Utility;Terminal;Ubuntu;am-okay
