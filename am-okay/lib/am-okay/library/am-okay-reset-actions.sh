@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Remove the directory --> "$HOME/.local/share/am-okay" to reset all actions 
 # done by <<am-okay>>. This script is linked to the script <<am-okay-boot.service>> 
