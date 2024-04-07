@@ -1,0 +1,8 @@
+Package: am-okay
+Version: 3.1.2
+Section: base   
+Priority: optional
+Architecture: all
+Maintainer: Baldé <baldeuniversel@protonmail.com>
+Depends: bash, coreutils, systemd, software-properties-common, curl, bc, gzip, awk, gawk, zsh, util-linux
+Description: The <<am-okay>> program allows dynamically to copy, cut, and paste dirs/files(Use from the terminal)
