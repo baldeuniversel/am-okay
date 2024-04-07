@@ -1,10 +1,10 @@
-## am-okay (for flatpak manager)
+# am-okay 
 
 The **am-okay** program allows dynamically to copy, cut, and paste 
 dirs/files (Use from the terminal) .
 
 
-With this program you can tag files or directories as items to copy or move via a 
+With the **am-okay** program you can tag files or directories as items to copy or move via a 
 console (terminal) and paste these items via another console (terminal) .
 
 
