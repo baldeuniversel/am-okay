@@ -1,4 +1,4 @@
-# am-okay (For the snap package manager) 
+# am-okay (For the snap package manager [in proper use]) 
 
 The **am-okay** program allows dynamically to copy, cut, and paste 
 dirs/files (Use from the terminal) .
