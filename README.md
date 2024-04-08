@@ -1,4 +1,6 @@
-# am-okay (For the snap package manager [for a proper use]) 
+# am-okay 
+
+###  For the snap package manager [for a proper use]
 
 The **am-okay** program allows dynamically to copy, cut, and paste 
 dirs/files (Use from the terminal) .
@@ -12,6 +14,12 @@ After installing the **am-okay** program, you can execute (from the terminal) th
 **am-okay --help** or **am-okay --doc** to get more information on how 
 to use the **am-okay** program. A lot of actions are possible, you can even tag files or
 directories in arrays and paste them wherever you want in your Linux system .
+
+<br />
+**Hash-package** : **md5sum(e8f3c1176b26cc245e53764c00083f26)**
+
+
+**Code-name** : **Entity**
 
 <br />
 
