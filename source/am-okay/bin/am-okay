@@ -180,6 +180,8 @@ then
     exit 1
 fi
 
+
+
 # Check the inputs parameters
 for optionUP in ${listOfParams[@]}
 do
@@ -293,6 +295,7 @@ fileArrayThreeCommandMvCp="$arrayIndex3Dir/array-three-pid-mv-cp"
 
 
 
+:   '
 # Launch a script by an autostart event -> Remove the historical of the actions done by `am-okay` command
 if [[ ! -e "$getPersonalUserDir/.config/autostart/am-okay.desktop" ]]
 then
@@ -313,6 +316,8 @@ then
     
     echo -e "X-GNOME-Autostart-enabled=true" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null 
 fi
+
+    '
 
 
 
