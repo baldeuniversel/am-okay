@@ -4,7 +4,7 @@
 # postinst script
 ####
 
-set -uo pipefail
+set -o pipefail
 
 
 
@@ -16,13 +16,13 @@ set -uo pipefail
 
 
 #
-ln -rfs /usr/bin/am-okay /usr/bin/am-ok &> /dev/null 
-ln -rfs /usr/bin/am-okay /usr/bin/amok &> /dev/null
-ln -rfs /usr/bin/am-okay /usr/bin/amokay &> /dev/null 
+ln -rfs $SNAP/usr/bin/am-okay $SNAP/usr/bin/am-ok &> /dev/null 
+ln -rfs $SNAP/usr/bin/am-okay $SNAP/usr/bin/amok &> /dev/null
+ln -rfs $SNAP/usr/bin/am-okay $SNAP/usr/bin/amokay &> /dev/null 
 
-ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/am-ok.1.gz &> /dev/null 
-ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/amok.1.gz &> /dev/null
-ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/amokay.1.gz &> /dev/null 
+ln -rfs $SNAP/usr/share/man/man1/am-okay.1.gz $SNAP/usr/share/man/man1/am-ok.1.gz &> /dev/null 
+ln -rfs $SNAP/usr/share/man/man1/am-okay.1.gz $SNAP/usr/share/man/man1/amok.1.gz &> /dev/null
+ln -rfs $SNAP/usr/share/man/man1/am-okay.1.gz $SNAP/usr/share/man/man1/amokay.1.gz &> /dev/null 
 
 # Just to print the name of the author
 echo ""

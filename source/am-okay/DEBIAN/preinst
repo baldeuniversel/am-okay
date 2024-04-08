@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 #
-set -uo pipefail
+set -o pipefail
 
 
 #####
