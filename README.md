@@ -17,7 +17,7 @@ directories in arrays and paste them wherever you want in your Linux system .
 
 <br />
 
-**Hash-package** : **md5sum(e8f3c1176b26cc245e53764c00083f26)**
+**Hash-package** : **md5sum(596d73e3cf4e0e07cb7fa0642cc528ef)**
 
 
 **Code-name** : **Entity**
