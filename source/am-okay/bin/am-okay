@@ -306,7 +306,7 @@ then
     echo -e "Type=Application" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
     echo -e "Version=1.0" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
     echo -e "Name=am-okay" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
-    echo -e "Exec=bash -c /usr/lib/am-okay/library/am-okay-reset-actions.sh" >> \
+    echo -e "Exec=bash -c $SNAP/usr/lib/am-okay/library/am-okay-reset-actions.sh" >> \
         "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
     echo -e "Terminal=false" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
     echo -e "Categories=System" >> "$getPersonalUserDir/.config/autostart/am-okay.desktop" 2> /dev/null
@@ -1056,27 +1056,27 @@ function pasteAction
                     if [[ $indexUP == "none" ]] && [[ $arrayPut == "none" ]]
                     then
                         # Display the status of the transfer
-                        /usr/lib/am-okay/library/progress-bar-copy.sh "$readLine" "$targetDir/$getEndFileDir"
+                        $SNAP/usr/lib/am-okay/library/progress-bar-copy.sh "$readLine" "$targetDir/$getEndFileDir"
                     #    
                     elif [[ $indexUP -eq 0 ]] &&  [[ $arrayPut == "--put" ]]
                     then
                         # Display the status of the transfer
-                        /usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 0
+                        $SNAP/usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 0
                     #
                     elif [[ $indexUP -eq 1 ]] &&  [[ $arrayPut == "--put" ]]
                     then
                         # Display the status of the transfer
-                        /usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 1
+                        $SNAP/usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 1
                     #
                     elif [[ $indexUP -eq 2 ]] &&  [[ $arrayPut == "--put" ]]
                     then
                         # Display the status of the transfer
-                        /usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 2
+                        $SNAP/usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 2
                     #
                     elif [[ $indexUP -eq 3 ]] &&  [[ $arrayPut == "--put" ]]
                     then
                         # Display the status of the transfer
-                        /usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 3
+                        $SNAP/usr/lib/am-okay/library/progress-bar-array-copy.sh "$readLine" "$targetDir/$getEndFileDir" 3
                     fi
                     
 
@@ -1227,27 +1227,27 @@ function pasteAction
                             if [[ $indexUP == "none" ]] && [[ $arrayPut == "none" ]]
                             then
                                 # Display the status of the transfer
-                                /usr/lib/am-okay/library/progress-bar-cut.sh "$readLine" "$targetDir/$getEndFileDir"
+                                $SNAP/usr/lib/am-okay/library/progress-bar-cut.sh "$readLine" "$targetDir/$getEndFileDir"
                             #    
                             elif [[ $indexUP -eq 0 ]] &&  [[ $arrayPut == "--put" ]]
                             then
                                 # Display the status of the transfer
-                                /usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 0
+                                $SNAP/usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 0
                             #
                             elif [[ $indexUP -eq 1 ]] &&  [[ $arrayPut == "--put" ]]
                             then
                                 # Display the status of the transfer
-                                /usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 1
+                                $SNAP/usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 1
                             #
                             elif [[ $indexUP -eq 2 ]] &&  [[ $arrayPut == "--put" ]]
                             then
                                 # Display the status of the transfer
-                                /usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 2
+                                $SNAP/usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 2
                             #
                             elif [[ $indexUP -eq 3 ]] &&  [[ $arrayPut == "--put" ]]
                             then
                                 # Display the status of the transfer
-                                /usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 3
+                                $SNAP/usr/lib/am-okay/library/progress-bar-array-cut.sh "$readLine" "$targetDir/$getEndFileDir" 3
                             fi
 
 
@@ -1428,7 +1428,7 @@ function pasteActionIn
 
 
         # Display the status of the transfer
-        /usr/lib/am-okay/library/progress-bar-copy.sh "$getProperSrc" "$getTheTargetDir/$getLastElemInSrc"
+        $SNAP/usr/lib/am-okay/library/progress-bar-copy.sh "$getProperSrc" "$getTheTargetDir/$getLastElemInSrc"
 
         # Check to see if the process above was executed correctly
         if [[ ! ( $? -eq 0 ) ]]
@@ -1490,7 +1490,7 @@ function pasteActionIn
 
 
         # Display the status of the transfer
-        /usr/lib/am-okay/library/progress-bar-cut.sh "$getProperSrc" "$getTheTargetDir/$getLastElemInSrc"
+        $SNAP/usr/lib/am-okay/library/progress-bar-cut.sh "$getProperSrc" "$getTheTargetDir/$getLastElemInSrc"
          
         # Check to see if the process above was executed correctly
         if [[ ! ( $? -eq 0 ) ]]
@@ -1865,7 +1865,7 @@ fi
 
 ### Manage the actions done by the [ --copy, --cut, --stat-copy, --stat-cut, --paste-copy, 
 #   --paste-cut ] options.
-# Here is the path of the python program -> `/usr/lib/am-okay/library/progress-bar` . [tag1] 
+# Here is the path of the python program -> `$SNAP/usr/lib/am-okay/library/progress-bar` . [tag1] 
 
 # Copy or cut action for the `--copy || -c`, `--cut || -c`, or `--array || -a` option as first parameter
 if [[ $1 == "--copy" ]] || [[ $1 == "--cut" ]] || [[ $1 == "-c" ]] || [[ $1 == "-x" ]]
@@ -2604,15 +2604,15 @@ fi
 
 if [[ $1 == "--doc" ]] && [[ $# -eq 1 ]]
 then
-    cat /usr/lib/am-okay/documentation/am-okay-doc 2> /dev/null 
+    cat $SNAP/usr/lib/am-okay/documentation/am-okay-doc 2> /dev/null 
     exit 0
 elif [[ $1 == "--help" ]] && [[ $# -eq 1 ]]
 then
-    cat /usr/lib/am-okay/documentation/am-okay-help 2> /dev/null 
+    cat $SNAP/usr/lib/am-okay/documentation/am-okay-help 2> /dev/null 
     exit 0
 elif [[ $1 == "--version" ]] && [[ $# -eq 1 ]]
 then
-    cat /usr/lib/am-okay/documentation/am-okay-version-pure 2> /dev/null
+    cat $SNAP/usr/lib/am-okay/documentation/am-okay-version-pure 2> /dev/null
     exit 0
 fi
 
