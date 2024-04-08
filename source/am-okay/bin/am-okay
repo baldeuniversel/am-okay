@@ -2604,7 +2604,8 @@ fi
 
 if [[ $1 == "--doc" ]] && [[ $# -eq 1 ]]
 then
-    cat $SNAP/usr/lib/am-okay/documentation/am-okay-doc 2> /dev/null 
+    cat $SNAP/usr/lib/am-okay/documentation/am-okay-doc  
+    cat /usr/lib/am-okay/documentation/am-okay-doc 
     exit 0
 elif [[ $1 == "--help" ]] && [[ $# -eq 1 ]]
 then
