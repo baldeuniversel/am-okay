@@ -18,7 +18,7 @@
 #####
 
 
-set -uo pipefail
+set -o pipefail
 
 
 # Declaration variables
@@ -62,11 +62,32 @@ else
 fi
 
 
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> start tag[k0]
+
+flagBehalfSudo=""
+getPersonalUserDir="$HOME"
+
+if [[ -n "$SUDO_USER" ]]
+then
+    #
+    flagBehalfSudo="$SUDO_USER"
+
+    # Get the personnel directory of the user
+    getPersonalUserDir=` getent passwd "$flagBehalfSudo" | cut -d ":" -f6 `
+fi
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> end tag[k0]
+
+
+
 #
 if [[ $a_arrayIndex -eq 0 ]]
 then
     #
-    a_filePidCommandCpMv="$HOME/.local/share/am-okay/array/array-init/array-init-pid-mv-cp"
+    a_filePidCommandCpMv="$getPersonalUserDir/.local/share/am-okay/array/array-init/array-init-pid-mv-cp"
 
     #
     a_getThePidCommandCpMv=` cat $a_filePidCommandCpMv 2> /dev/null | tr -d "[[:space:]]" `
@@ -74,7 +95,7 @@ then
 elif [[ $a_arrayIndex -eq 1 ]]
 then
     #
-    a_filePidCommandCpMv="$HOME/.local/share/am-okay/array/array-1/array-one-pid-mv-cp"
+    a_filePidCommandCpMv="$getPersonalUserDir/.local/share/am-okay/array/array-1/array-one-pid-mv-cp"
 
     #
     a_getThePidCommandCpMv=` cat $a_filePidCommandCpMv 2> /dev/null | tr -d "[[:space:]]" `
@@ -82,7 +103,7 @@ then
 elif [[ $a_arrayIndex -eq 2 ]]
 then
     #
-    a_filePidCommandCpMv="$HOME/.local/share/am-okay/array/array-2/array-two-pid-mv-cp"
+    a_filePidCommandCpMv="$getPersonalUserDir/.local/share/am-okay/array/array-2/array-two-pid-mv-cp"
 
     #
     a_getThePidCommandCpMv=` cat $a_filePidCommandCpMv 2> /dev/null | tr -d "[[:space:]]" `
@@ -90,7 +111,7 @@ then
 elif [[ $a_arrayIndex -eq 3 ]]
 then
     #
-    a_filePidCommandCpMv="$HOME/.local/share/am-okay/array/array-3/array-three-pid-mv-cp"
+    a_filePidCommandCpMv="$getPersonalUserDir/.local/share/am-okay/array/array-3/array-three-pid-mv-cp"
 
     #
     a_getThePidCommandCpMv=` cat $a_filePidCommandCpMv 2> /dev/null | tr -d "[[:space:]]" `

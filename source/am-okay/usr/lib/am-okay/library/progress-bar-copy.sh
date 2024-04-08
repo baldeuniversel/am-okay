@@ -18,7 +18,27 @@
 #####
 
 
-set -uo pipefail
+set -o pipefail
+
+
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> start tag[k0]
+
+flagBehalfSudo=""
+getPersonalUserDir="$HOME"
+
+if [[ -n "$SUDO_USER" ]]
+then
+    #
+    flagBehalfSudo="$SUDO_USER"
+
+    # Get the personnel directory of the user
+    getPersonalUserDir=` getent passwd "$flagBehalfSudo" | cut -d ":" -f6 `
+fi
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> end tag[k0]
 
 
 # Declaration variables
@@ -38,7 +58,7 @@ a_terminate_process="TRUE"
 
 declare -a a_character_bar_front_list=("▊" "▉" "█")
 a_character_bar_back="-"
-a_filePidCommandCp="$HOME/.local/share/am-okay/classic/classic-pid-cp"
+a_filePidCommandCp="$getPersonalUserDir/.local/share/am-okay/classic/classic-pid-cp"
 
 tmp_sizeOfSourceData="/tmp/.$USER/am-okay/progress/$a_getThisPid/size-source-data"
 tmp_sizeOfOngoingData="/tmp/.$USER/am-okay/progress/$a_getThisPid/size-ongoing-data"

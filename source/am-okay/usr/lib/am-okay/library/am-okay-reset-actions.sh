@@ -6,8 +6,31 @@
 # or in the directory of the project <<am-okay>> that is on the github site with the path
 # "Projects/am-okay/etc/systemd/system/am-okay-boot.service" [ve-quantic repository]
 
-if [[ -e "$HOME/.local/share/am-okay" ]]
+
+set -o pipefail
+
+
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> start tag[k0]
+
+flagBehalfSudo=""
+getPersonalUserDir="$HOME"
+
+if [[ -n "$SUDO_USER" ]]
 then
-    rm -r "$HOME/.local/share/am-okay" 2> /dev/null 
+    #
+    flagBehalfSudo="$SUDO_USER"
+
+    # Get the personnel directory of the user
+    getPersonalUserDir=` getent passwd "$flagBehalfSudo" | cut -d ":" -f6 `
 fi
 
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> end tag[k0]
+
+
+if [[ -e "$getPersonalUserDir/.local/share/am-okay" ]]
+then
+    rm -r "$getPersonalUserDir/.local/share/am-okay" 2> /dev/null 
+fi
