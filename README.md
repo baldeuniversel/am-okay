@@ -17,10 +17,10 @@ directories in arrays and paste them wherever you want in your Linux system .
 
 <br />
 
-**Hash-package** : **md5sum(27a9ee8903d81a1ea367d2804d28659a)**
+**Hash-package** : **md5sum(9f6f6c019c0fcbdc5243dad741d950b0)**
 
 
-**Code-name** : **Entity**
+**Code-name** : **Veronica**
 
 <br />
 
