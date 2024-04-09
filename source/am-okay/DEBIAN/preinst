@@ -1,0 +1,74 @@
+#!/usr/bin/bash
+
+#
+set -o pipefail
+
+
+#####
+# Action before deploying the program 
+#####
+
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> start tag[k0]
+
+flagBehalfSudo=""
+getPersonalUserDir="$HOME"
+getTheRealUser="$USER"
+
+if [[ -n "$SUDO_USER" ]]
+then
+    #
+    flagBehalfSudo="$SUDO_USER"
+    getTheRealUser="$SUDO_USER"
+
+    # Get the personnel directory of the user
+    getPersonalUserDir=` getent passwd "$flagBehalfSudo" | cut -d ":" -f6 `
+fi
+
+### Check to see who executes the `am-okay` program, then get the personnel directory
+#   of this user -> end tag[k0]
+
+
+
+#
+rm -r "$getPersonalUserDir/.local/share/am-okay" 2> /dev/null
+
+
+
+# Declaration variables
+getOS=""
+
+
+
+### Action on the directory `/tmp` and others -> start tag[v0]
+
+if [[ ! ( -e "/tmp" ) ]]
+then
+    
+    #
+    mkdir -p /tmp 2> /dev/null
+    chmod 777 /tmp 2> /dev/null
+
+    # Check the value of return  of the last command
+    if [[ $? -ne 0 ]]
+    then
+        echo "~"
+        echo "This program is not compatible with your system ."
+        exit 1
+    fi
+
+    # Get kernel
+    getOS=` uname --operating-system `
+
+    #
+    if [[ $getOS != "GNU/Linux" ]]
+    then
+        echo "~"
+        echo "This program is not compatible with your system ."
+        exit 1
+    fi
+
+fi
+
+### Action on the directory `/tmp` and others -> end tag[v0]

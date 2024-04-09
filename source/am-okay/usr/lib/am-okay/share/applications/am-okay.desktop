@@ -1,0 +1,10 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=am-okay
+Exec=bash -c /usr/lib/am-okay/library/am-okay-reset-actions.sh
+Terminal=false
+Categories=System
+
+X-GNOME-Autostart-enabled=true

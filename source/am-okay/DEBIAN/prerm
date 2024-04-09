@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+#####
+# prerm script
+####
+
+set -o pipefail
+
+# Declaration variables
+meoListInstalledPkgsPure="/usr/lib/meo/library/info/list-installed-packages-pure"
+
+if [[ -e "$meoListInstalledPkgsPure" ]]
+then
+    #
+    sed -i "/am-okay/d" "$meoListInstalledPkgsPure" 2> /dev/null
+fi
+

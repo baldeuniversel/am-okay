@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+#####
+# postinst script
+####
+
+set -o pipefail
+
+
+
+### Enable the service linked to the <<am-okay>> program, and do another actions -> start tag[s0]
+
+#systemctl enable am-okay-boot.service  &> /dev/null
+#systemctl daemon-reload  &> /dev/null
+#systemctl start am-okay-boot.service  &> /dev/null
+
+
+#
+ln -rfs /usr/bin/am-okay /usr/bin/am-ok &> /dev/null 
+ln -rfs /usr/bin/am-okay /usr/bin/amok &> /dev/null
+ln -rfs /usr/bin/am-okay /usr/bin/amokay &> /dev/null 
+
+ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/am-ok.1.gz &> /dev/null 
+ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/amok.1.gz &> /dev/null
+ln -rfs /usr/share/man/man1/am-okay.1.gz /usr/share/man/man1/amokay.1.gz &> /dev/null 
+
+# Just to print the name of the author
+echo ""
+echo ""
+echo "~"
+
+tput setaf 6; tput bold; echo "By Baldé ~" `tput sgr0` 2> /dev/null
+
+### Enable the service linked to the <<am-okay>> program, and do another actions -> end tag[s0]
