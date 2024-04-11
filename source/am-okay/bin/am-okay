@@ -224,24 +224,29 @@ fi
 
 
 ### Check to see who executes the `am-okay` program, then get the personnel directory
-#   of this user -> start tag[k0]
+#   of this user, then ... -> start tag[k0]
 
 flagBehalfSudo=""
 getPersonalUserDir="$HOME"
 getTheRealUser="$USER"
+getTheGroupNameUser=""
+flagSudoUser="false"
+flagRootDirForActions="false"
 
 if [[ -n "$SUDO_USER" ]]
 then
     #
     flagBehalfSudo="$SUDO_USER"
     getTheRealUser="$SUDO_USER"
+    getTheGroupNameUser=` id -gn $getTheRealUser `
+    flagSudoUser="true"
 
     # Get the personnel directory of the user
     getPersonalUserDir=` getent passwd "$flagBehalfSudo" | cut -d ":" -f6 `
 fi
 
 ### Check to see who executes the `am-okay` program, then get the personnel directory
-#   of this user -> end tag[k0]
+#   of this user, then ... -> end tag[k0]
 
 
 
@@ -1621,6 +1626,19 @@ then
 
     #
     truncate -s 0 $fileCodeCommandReturn
+
+    #
+    flagRootDirForActions="true"
+else
+    #
+    if [[ ` stat --format=%U "$rootDirForActions" ` != $getTheRealUser ]]
+    then
+        echo ""
+        echo "~"
+        echo -e "Action rejected 🧐, please remove the directory -> [ $rootDirForActions ]"
+
+        exit 1
+    fi
 fi
 
 # Creating a root directory for the files -> `copyActionFile` and `cutActionFile`
@@ -1693,6 +1711,7 @@ then
     #
     truncate -s 0 $fileCodeCommandReturn
 
+    
     #
     touch $arrayIndexInitCopyCutActionFile $arrayIndexInitCopyCutActionFileOnly $arrayIndex1CopyCutActionFile \
           $arrayIndex1CopyCutActionFileOnly $arrayIndex2CopyCutActionFile $arrayIndex2CopyCutActionFileOnly \
@@ -1704,6 +1723,37 @@ then
     #
     truncate -s 0 $fileCodeCommandReturn
 fi
+
+#
+if [[ $flagRootDirForActions == "true" ]]
+then
+    # 
+    if [[ "$flagSudoUser" == "true" ]]
+    then
+        #
+        chown -R $getTheRealUser:$getTheGroupNameUser $rootDirForActions 2> $fileCodeCommandReturn
+
+        # Call the function -> `alertNonEffectiveAction`
+        alertNonEffectiveAction $fileCodeCommandReturn
+
+        #
+        truncate -s 0 $fileCodeCommandReturn
+
+        #
+        if [[ -e "/tmp/.$getTheRealUser" ]]
+        then
+            #
+            chown -R $getTheRealUser:$getTheGroupNameUser "/tmp/.$getTheRealUser" 2> $fileCodeCommandReturn
+
+            # Call the function -> `alertNonEffectiveAction`
+            alertNonEffectiveAction $fileCodeCommandReturn
+
+            #
+            truncate -s 0 $fileCodeCommandReturn
+        fi
+    fi
+fi
+
 
 
 # Call the function
