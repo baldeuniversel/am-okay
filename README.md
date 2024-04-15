@@ -20,7 +20,7 @@ directories in arrays and paste them wherever you want in your Linux system .
 **Hash-package** : **md5sum(979163dd3f579ba9466110ff18a26b13)**
 
 
-**Code-name** : **Curiosity**
+**Codename** : **curiosity**
 
 <br />
 
