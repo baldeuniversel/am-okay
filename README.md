@@ -38,77 +38,62 @@ am-okay [option | options] [target-dirs | target-files]
 ## Options
 
 - `--copy`, `-c`  
-  **Type:** string  
   Copies the specified file(s) or directory(ies). You can use the wildcard `*` to target all contents in the current directory.  
   **Example:** `am-okay --copy <target-dir-or-file>`
 
-- `--cut`, `-x`  
-  **Type:** string  
+- `--cut`, `-x`   
   Cuts the specified file(s) or directory(ies). The wildcard `*` can be used similarly as with the `--copy` option.  
   **Example:** `am-okay --cut <target-dir-or-file>`
 
 - `--paste-copy`, `--paste-c`, `-pc`  
-  **Type:** string  
   Pastes files or directories that were previously copied. This must follow a `--copy` action.  
   **Example:** `am-okay --paste-copy <target-directory>`
 
 - `--paste-cut`, `--paste-x`, `-px`  
-  **Type:** string  
   Pastes files or directories that were previously cut. This must follow a `--cut` action.  
   **Example:** `am-okay --paste-cut <target-directory>`
 
 - `--array`, `-a`  
-  **Type:** string  
   Allows multiple copy or cut actions to be indexed for later use.  
   **Example:** `am-okay --array --index 0 --copy <file-1> <dir-1>`
 
-- `--index`, `-i`  
-  **Type:** string | int  
+- `--index`, `-i`   
   Specifies the index for `--array` actions.  
   **Example:** `am-okay --array --index 0 --copy <file-1>`
 
 - `--put`, `-p`  
-  **Type:** string  
   Puts files or directories stored in an array index to a target location.  
   **Example:** `am-okay --array --index 0 --put <target-dir>`
 
 - `--stat-copy`, `--stat-c`, `-sc`  
-  **Type:** string  
   Displays the status of the last copy action.  
   **Example:** `am-okay --stat-copy`
 
-- `--stat-cut`, `--stat-x`, `-sx`  
-  **Type:** string  
+- `--stat-cut`, `--stat-x`, `-sx`   
   Displays the status of the last cut action.  
   **Example:** `am-okay --stat-cut`
 
 - `--stat`, `-s`  
-  **Type:** string  
   Displays the status of an action associated with `--array`.  
   **Example:** `am-okay --array --index 0 --stat`
 
 - `--out`, `-o`  
-  **Type:** string  
   Specifies the output directory for direct actions like `--copy` or `--cut`.  
   **Example:** `am-okay --copy <target> --out <output-dir>`
 
-- `--reset`, `-r`  
-  **Type:** string  
+- `--reset`, `-r`   
   Resets all actions. The word `request` must follow this option.  
   **Example:** `am-okay --reset request`
 
 - `--doc`  
-  **Type:** string  
   Displays the documentation for the `am-okay` program.  
   **Example:** `am-okay --doc`
 
-- `--help`  
-  **Type:** string  
+- `--help`   
   Displays help information.  
   **Example:** `am-okay --help`
 
 - `--version`  
-  **Type:** string  
   Displays the current version of `am-okay`.  
   **Example:** `am-okay --version`
 
