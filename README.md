@@ -31,9 +31,7 @@ To use `am-okay`, the following preconditions must be met:
 
 ## Synopsis
 
-```
-am-okay [option | options] [target-dirs | target-files]
-```
+`am-okay [option | options] [target-dirs | target-files]`
 
 ## Options
 
