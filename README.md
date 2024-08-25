@@ -37,67 +37,92 @@ To use `am-okay`, the following preconditions must be met:
 
 - `--copy`, `-c`
 
-  Copies the specified file(s) or directory(ies). You can use the wildcard `*` to target all contents in the current directory.  
+  Copies the specified file(s) or directory(ies). You can use the wildcard `*` to target all contents in the current directory.
+  
   **Example:** `am-okay --copy <target-dir-or-file>`
 
 - `--cut`, `-x`
 
-  Cuts the specified file(s) or directory(ies). The wildcard `*` can be used similarly as with the `--copy` option.  
+  Cuts the specified file(s) or directory(ies). The wildcard `*` can be used similarly as with the `--copy` option.
+  
   **Example:** `am-okay --cut <target-dir-or-file>`
 
 - `--paste-copy`, `--paste-c`, `-pc`
   
-  Pastes files or directories that were previously copied. This must follow a `--copy` action.  
+  Pastes files or directories that were previously copied. This must follow a `--copy` action.
+  
   **Example:** `am-okay --paste-copy <target-directory>`
 
 - `--paste-cut`, `--paste-x`, `-px`
   
-  Pastes files or directories that were previously cut. This must follow a `--cut` action.  
+  Pastes files or directories that were previously cut. This must follow a `--cut` action.
+  
   **Example:** `am-okay --paste-cut <target-directory>`
 
 - `--array`, `-a`
   
-  Allows multiple copy or cut actions to be indexed for later use.  
+  Allows multiple copy or cut actions to be indexed for later use.
+  
   **Example:** `am-okay --array --index 0 --copy <file-1> <dir-1>`
 
-- `--index`, `-i`   
-  Specifies the index for `--array` actions.  
+- `--index`, `-i`
+  
+  Specifies the index for `--array` actions.
+  
   **Example:** `am-okay --array --index 0 --copy <file-1>`
 
-- `--put`, `-p`  
-  Puts files or directories stored in an array index to a target location.  
+- `--put`, `-p`
+  
+  Puts files or directories stored in an array index to a target location.
+   
   **Example:** `am-okay --array --index 0 --put <target-dir>`
 
-- `--stat-copy`, `--stat-c`, `-sc`  
-  Displays the status of the last copy action.  
+- `--stat-copy`, `--stat-c`, `-sc`
+  
+  Displays the status of the last copy action.
+  
   **Example:** `am-okay --stat-copy`
 
-- `--stat-cut`, `--stat-x`, `-sx`   
-  Displays the status of the last cut action.  
+- `--stat-cut`, `--stat-x`, `-sx`
+  
+  Displays the status of the last cut action.
+  
   **Example:** `am-okay --stat-cut`
 
-- `--stat`, `-s`  
-  Displays the status of an action associated with `--array`.  
+- `--stat`, `-s`
+  
+  Displays the status of an action associated with `--array`.
+  
   **Example:** `am-okay --array --index 0 --stat`
 
-- `--out`, `-o`  
-  Specifies the output directory for direct actions like `--copy` or `--cut`.  
+- `--out`, `-o`
+  
+  Specifies the output directory for direct actions like `--copy` or `--cut`.
+  
   **Example:** `am-okay --copy <target> --out <output-dir>`
 
-- `--reset`, `-r`   
-  Resets all actions. The word `request` must follow this option.  
+- `--reset`, `-r`
+  
+  Resets all actions. The word `request` must follow this option.
+  
   **Example:** `am-okay --reset request`
 
-- `--doc`  
-  Displays the documentation for the `am-okay` program.  
+- `--doc`
+  
+  Displays the documentation for the `am-okay` program.
+  
   **Example:** `am-okay --doc`
 
-- `--help`   
-  Displays help information.  
+- `--help`
+  
+  Displays help information.
+  
   **Example:** `am-okay --help`
 
-- `--version`  
-  Displays the current version of `am-okay`.  
+- `--version`
+  
+  Displays the current version of `am-okay`.
+  
   **Example:** `am-okay --version`
 
 ## Usage Examples
