@@ -115,27 +115,27 @@ am-okay [option | options] [target-dirs | target-files]
 ## Usage Examples
 
 1. **Copy a directory**  
-   \`\`\`bash
+   ```bash
    am-okay --copy /path/to/directory
-   \`\`\`
+   ```
 
 2. **Cut a file and paste it into another directory**  
-   \`\`\`bash
+   ```bash
    am-okay --cut /path/to/file
    am-okay --paste-cut /path/to/destination
-   \`\`\`
+   ```
 
 3. **Using array and indexes to manage multiple operations**  
-   \`\`\`bash
+   ```bash
    am-okay --array --index 0 --copy /path/to/file1
    am-okay --array --index 1 --cut /path/to/file2
    am-okay --array --index 0 --put /destination/for/file1
-   \`\`\`
+   ```
 
 4. **Check the status of a copy operation**  
-   \`\`\`bash
+   ```bash
    am-okay --stat-copy
-   \`\`\`
+   ```
 
 ## Notes
 
@@ -151,7 +151,7 @@ am-okay [option | options] [target-dirs | target-files]
 - **Author**: Baldé Amadou - [baldeuniversel@protonmail.com](mailto:baldeuniversel@protonmail.com)
 - **Contributor**: Diallo Ismaila - [diallois@protonmail.com](mailto:diallois@protonmail.com)
 
-Feel free to reach out to the author or contributor for any queries or contributions related to the `am-okay` program.
+**Feel free to reach out to the author for any queries or contributions related to the `am-okay` program**.
 
 ---
 
