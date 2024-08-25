@@ -1,29 +1,158 @@
-# am-okay 
 
-###  For the GNU/Linux system
+# Documentation for `am-okay` (version 3.1.2)
 
-The **am-okay** program allows dynamically to copy, cut, and paste 
-dirs/files (Use from the terminal) .
+## Table of Contents
 
+1. [Introduction](#introduction)
+2. [Overview](#overview)
+3. [Requirements](#requirements)
+4. [Synopsis](#synopsis)
+5. [Options](#options)
+6. [Usage Examples](#usage-examples)
+7. [Notes](#notes)
+8. [Author and Contributors](#author-and-contributors)
 
-With the **am-okay** program you can tag files or directories as items to copy or move via a 
-console (terminal) and paste these items via another console (terminal) .
+## Introduction
 
+`am-okay` is a command-line program designed to dynamically copy, cut, and paste files or directories across different terminal sessions. This functionality allows users to initiate a file operation in one terminal session and complete it in another, as long as both sessions are under the same user profile.
 
-After installing the **am-okay** program, you can execute (from the terminal) the command 
-**am-okay --help** or **am-okay --doc** to get more information on how 
-to use the **am-okay** program. A lot of actions are possible, you can even tag files or
-directories in arrays and paste them wherever you want in your Linux system .
+## Overview
 
-<br />
+`am-okay` supports a variety of options to manage files and directories effectively. These options provide users with the flexibility to copy, cut, and paste files or directories, either directly or through indexed actions. The program is inspired by Ve-Quantic principles, providing a robust and dynamic file management experience.
 
-**Hash-package** : **md5sum(979163dd3f579ba9466110ff18a26b13)**
-<br />
-**Codename** : **curiosity**
+## Requirements
 
-<br />
+To use `am-okay`, the following preconditions must be met:
+
+- The program requires at least one option to be specified.
+- If an index is used (via `--index` or `-i`), it must be a positive integer between 0 and 3.
+- Certain options are interdependent (e.g., `--paste-copy` must follow a `--copy` action).
+- File or directory names must not contain the character `?`.
+
+## Synopsis
+
+\`\`\`bash
+am-okay [option | options] [target-dirs | target-files]
+\`\`\`
+
+## Options
+
+- `--copy`, `-c`  
+  **Type:** string  
+  Copies the specified file(s) or directory(ies). You can use the wildcard `*` to target all contents in the current directory.  
+  **Example:** `am-okay --copy <target-dir-or-file>`
+
+- `--cut`, `-x`  
+  **Type:** string  
+  Cuts the specified file(s) or directory(ies). The wildcard `*` can be used similarly as with the `--copy` option.  
+  **Example:** `am-okay --cut <target-dir-or-file>`
+
+- `--paste-copy`, `--paste-c`, `-pc`  
+  **Type:** string  
+  Pastes files or directories that were previously copied. This must follow a `--copy` action.  
+  **Example:** `am-okay --paste-copy <target-directory>`
+
+- `--paste-cut`, `--paste-x`, `-px`  
+  **Type:** string  
+  Pastes files or directories that were previously cut. This must follow a `--cut` action.  
+  **Example:** `am-okay --paste-cut <target-directory>`
+
+- `--array`, `-a`  
+  **Type:** string  
+  Allows multiple copy or cut actions to be indexed for later use.  
+  **Example:** `am-okay --array --index 0 --copy <file-1> <dir-1>`
+
+- `--index`, `-i`  
+  **Type:** string | int  
+  Specifies the index for `--array` actions.  
+  **Example:** `am-okay --array --index 0 --copy <file-1>`
+
+- `--put`, `-p`  
+  **Type:** string  
+  Puts files or directories stored in an array index to a target location.  
+  **Example:** `am-okay --array --index 0 --put <target-dir>`
+
+- `--stat-copy`, `--stat-c`, `-sc`  
+  **Type:** string  
+  Displays the status of the last copy action.  
+  **Example:** `am-okay --stat-copy`
+
+- `--stat-cut`, `--stat-x`, `-sx`  
+  **Type:** string  
+  Displays the status of the last cut action.  
+  **Example:** `am-okay --stat-cut`
+
+- `--stat`, `-s`  
+  **Type:** string  
+  Displays the status of an action associated with `--array`.  
+  **Example:** `am-okay --array --index 0 --stat`
+
+- `--out`, `-o`  
+  **Type:** string  
+  Specifies the output directory for direct actions like `--copy` or `--cut`.  
+  **Example:** `am-okay --copy <target> --out <output-dir>`
+
+- `--reset`, `-r`  
+  **Type:** string  
+  Resets all actions. The word `request` must follow this option.  
+  **Example:** `am-okay --reset request`
+
+- `--doc`  
+  **Type:** string  
+  Displays the documentation for the `am-okay` program.  
+  **Example:** `am-okay --doc`
+
+- `--help`  
+  **Type:** string  
+  Displays help information.  
+  **Example:** `am-okay --help`
+
+- `--version`  
+  **Type:** string  
+  Displays the current version of `am-okay`.  
+  **Example:** `am-okay --version`
+
+## Usage Examples
+
+1. **Copy a directory**  
+   \`\`\`bash
+   am-okay --copy /path/to/directory
+   \`\`\`
+
+2. **Cut a file and paste it into another directory**  
+   \`\`\`bash
+   am-okay --cut /path/to/file
+   am-okay --paste-cut /path/to/destination
+   \`\`\`
+
+3. **Using array and indexes to manage multiple operations**  
+   \`\`\`bash
+   am-okay --array --index 0 --copy /path/to/file1
+   am-okay --array --index 1 --cut /path/to/file2
+   am-okay --array --index 0 --put /destination/for/file1
+   \`\`\`
+
+4. **Check the status of a copy operation**  
+   \`\`\`bash
+   am-okay --stat-copy
+   \`\`\`
+
+## Notes
+
+- `am-okay` relies on certain programs that are required as part of its global package.
+- Actions performed with the `--copy` option can be repeated using the `--paste-copy` option without re-initiating the copy.
+- Similarly, actions performed with the `--cut` option can be repeated using the `--paste-cut` option.
+- The `--copy` and `--cut` options have different hash codes and thus manage different sets of files or directories.
+- The program operates based on the user profile under which it is run. To ensure consistent operations, use the same profile for all related actions.
+- A progress bar will display during copy or move operations executed with `--paste-copy`, `--paste-cut`, or `--put`.
+
+## Author and Contributors
+
+- **Author**: Baldé Amadou - [baldeuniversel@protonmail.com](mailto:baldeuniversel@protonmail.com)
+- **Contributor**: Diallo Ismaila - [diallois@protonmail.com](mailto:diallois@protonmail.com)
+
+Feel free to reach out to the author or contributor for any queries or contributions related to the `am-okay` program.
 
 ---
-#### *Info*
-For any request, write to me via this email address : 
-[baldeuniversel@protonmail.com](mailto:baldeuniversel@protonmail.com)
+
+This documentation provides a comprehensive overview and should help in effectively utilizing the `am-okay` program.
