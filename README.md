@@ -1,4 +1,3 @@
-
 # Documentation for `am-okay` (version 3.1.2)
 
 ## Table of Contents
