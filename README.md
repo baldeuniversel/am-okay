@@ -35,23 +35,28 @@ To use `am-okay`, the following preconditions must be met:
 
 ## Options
 
-- `--copy`, `-c`  
+- `--copy`, `-c`
+
   Copies the specified file(s) or directory(ies). You can use the wildcard `*` to target all contents in the current directory.  
   **Example:** `am-okay --copy <target-dir-or-file>`
 
-- `--cut`, `-x`   
+- `--cut`, `-x`
+
   Cuts the specified file(s) or directory(ies). The wildcard `*` can be used similarly as with the `--copy` option.  
   **Example:** `am-okay --cut <target-dir-or-file>`
 
-- `--paste-copy`, `--paste-c`, `-pc`  
+- `--paste-copy`, `--paste-c`, `-pc`
+  
   Pastes files or directories that were previously copied. This must follow a `--copy` action.  
   **Example:** `am-okay --paste-copy <target-directory>`
 
-- `--paste-cut`, `--paste-x`, `-px`  
+- `--paste-cut`, `--paste-x`, `-px`
+  
   Pastes files or directories that were previously cut. This must follow a `--cut` action.  
   **Example:** `am-okay --paste-cut <target-directory>`
 
-- `--array`, `-a`  
+- `--array`, `-a`
+  
   Allows multiple copy or cut actions to be indexed for later use.  
   **Example:** `am-okay --array --index 0 --copy <file-1> <dir-1>`
 
