@@ -27,10 +27,25 @@ Supports **slot operations**, **default operations**, **cut & copy**, **progress
 
 ## 💾 Installation
 
+#### ✅ Install via pip (recommended)
+`am-okay` is published on **PyPI** and can be installed using the official Python package manager:
+```bash
+pip install am-okay
+```
+
+#### 🛠️ Install from source via pip (quick development/test)
 ```bash
 git clone https://github.com/baldeuniversel/am-okay.git
 cd am-okay
 pip install -r requirements.txt
+```
+
+#### 🛠️ Install from source using Poetry (full development / contribution)
+```bash 
+git clone https://github.com/baldeuniversel/am-okay.git
+cd am-okay
+poetry install
+poetry run am-okay --help
 ```
 
 ---
@@ -155,7 +170,7 @@ am-okay --cut file4.txt dirD --paste dest/
 **Amadou Baldé**  
 *Developer/Programmer ... | Open Source Contributor*
 
-#### Connect with Me:
+#### Connect with me:
 - [GitHub](https://github.com/baldeuniversel)  
 - [Email](mailto:baldeuniversel@protonmail.com)
 

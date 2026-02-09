@@ -1,7 +1,7 @@
 
 [project]
 name = "am-okay"
-version = "1.0.2"
+version = "1.0.3"
 description = "A portable command-line tool for copying and moving files and directories with progress indication."
 authors = [
     {name = "Amadou Baldé", email = "baldeuniversel@protonmail.com"}
@@ -19,6 +19,11 @@ classifiers = [
 dependencies = [
     "tqdm (>=4.67.1,<5.0.0)"
 ]
+
+[project.urls]
+Homepage = "https://github.com/baldeuniversel/am-okay"
+Repository = "https://github.com/baldeuniversel/am-okay"
+Documentation = "https://github.com/baldeuniversel/am-okay#readme"
 
 [tool.poetry]
 packages = [{include = "am_okay", from = "src"}]
