@@ -1,0 +1,70 @@
+
+name: am-okay
+
+env:
+  am-okay-version: 1.0.2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: Cache Poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          poetry --version
+
+      - name: Install dependencies
+        run: |
+          poetry install --with dev --no-interaction --no-ansi
+      
+      - name: Lint Python code
+        run: |
+          poetry run pylint --disable=trailing-whitespace,line-too-long src/am_okay/ tests/ --fail-under=8
+
+      - name: Run tests via `pytest`
+        run: |
+          poetry run pytest tests/ --maxfail=0 --disable-warnings -q
+
+      - name: Type checking with `mypy`
+        run: |
+          poetry run mypy src/am_okay --check-untyped-defs
+
+      - name: Build the package
+        run: |
+          poetry build
+          
+          # Copy artifacts
+          mkdir -p output
+          cp dist/* output/
+
+      - name: Upload built package as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: am-okay
+          path: output/

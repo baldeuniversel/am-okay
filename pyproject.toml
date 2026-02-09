@@ -1,0 +1,39 @@
+
+[project]
+name = "am-okay"
+version = "1.0.2"
+description = "A portable command-line tool for copying and moving files and directories with progress indication."
+authors = [
+    {name = "Amadou Baldé", email = "baldeuniversel@protonmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = ["file", "transfer", "buffer", "COPY", "CUT"]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "tqdm (>=4.67.1,<5.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "am_okay", from = "src"}]
+
+[project.scripts]
+am-okay = "am_okay.cli:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "pylint (>=4.0.4,<5.0.0)",
+    "mypy (>=1.19.1,<2.0.0)",
+    "types-tqdm (>=4.67.3.20260205,<5.0.0.0)"
+]
