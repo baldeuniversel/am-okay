@@ -1,3 +1,6 @@
+
+<a id="back-to-top"></a>
+
 # ⚡ am-okay CLI
 A portable command-line tool for copying and moving files and directories with progress indication.  
 Supports **slot operations**, **default operations**, **cut & copy**, **progress bar**, and **JSON persistence**.
@@ -9,11 +12,15 @@ Supports **slot operations**, **default operations**, **cut & copy**, **progress
 ## 📚 Summary
 - [Features](#general-features)  
 - [Installation](#installation)   
-- [Use cases (slot operations)](#use-cases-slot-operations)
-- [Use cases (default operations)](#use-cases-default-operations)
-- [About the Author](#about-the-author)  
+- [Use cases](#use-cases)   
+    - [Use cases (slot operations)](#use-cases-slot-operations)
+    - [Use cases (default operations)](#use-cases-default-operations)
+    - [Use cases (filesystem information)](#use-cases-filesystem-information)
+- [About the Author](#about-the-author)
 - [License](#license)
 
+
+<a id="general-features"></a>
 
 ## ✨ General features
 - Prepare and execute **copy** and **cut** operations.
@@ -23,7 +30,10 @@ Supports **slot operations**, **default operations**, **cut & copy**, **progress
 - Provides a **progress bar** during file transfers.
 - Persist prepared operations in **JSON** for later use.
 - Fully portable CLI tool.
+- Display detailed filesystem information (size, permissions, dates, ...etc) for files and directories.
 
+
+<a id="installation"></a>
 
 ## 💾 Installation
 
@@ -52,7 +62,13 @@ poetry run am-okay --help
 
 
 
-## 🔢 Use cases (slot operations)
+<a id="use-cases"></a>
+
+## 🎯 Use cases
+
+<a id="use-cases-slot-operations"></a>
+
+### 🔢 Use cases (slot operations)
 
 #### Prepare a `copy` operation for the slot 0
 ```bash
@@ -124,6 +140,7 @@ am-okay --slot 0,1 --reset
 am-okay --slot all --reset
 ```
 
+<a id="use-cases-default-operations"></a>
 
 ## 🏷️ Use cases (default operations)
 
@@ -162,9 +179,31 @@ am-okay --copy file3.txt dirC --paste dest/
 am-okay --cut file4.txt dirD --paste dest/
 ```
 
+
+<a id="use-cases-filesystem-information"></a>
+
+## 📁 Use cases (filesystem information)
+
+#### Display information about a file
+```bash
+am-okay --info file5.txt
+```
+
+#### Display information about a directory
+```bash
+am-okay --info dirE
+```
+
+#### Display information about multiple files or directories
+```bash
+am-okay --info file6.txt dirF file7.txt dirG
+```
+
 ---
 
 
+
+<a id="about-the-author"></a>
 
 ## 👤 About the Author
 **Amadou Baldé**  
@@ -180,5 +219,13 @@ Feel free to reach out if you'd like to collaborate on a project or discuss Pyth
 
 
 
+<a id="license"></a>
+
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](https://opensource.org/license/mit) file for details.
+
+---
+
+
+
+[🔝 Back to top](#back-to-top) 
