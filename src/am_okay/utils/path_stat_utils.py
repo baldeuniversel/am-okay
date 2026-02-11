@@ -1,11 +1,9 @@
 
+import sys
 import stat
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, Optional
-import mimetypes
-import pwd
-import grp
 
 from am_okay.utils.wait_animation_utils import WaitAnimation
 
@@ -101,13 +99,119 @@ class PathStat:
 
 
 
-    def stat(self, path: str | Path) -> Dict[str, str | int | datetime]:
+    @staticmethod
+    def get_path_owner_and_group(path: Path) -> Dict[str, str | int | None]:
+        """
+        @overview A static method to retrieve the owner and group of a file or directory.
+
+        @details On Linux/macOS, it uses UID/GID to resolve human-readable names.
+                On Windows, it uses pywin32's `win32security` module to resolve 
+                the owner and group names from the security descriptor.
+
+        :param path {Path} - The file or directory path.
+
+        :return {Dict[str, str | int | None]} - A dictionary containing the owner and group information for the given path.
+        """
+
+        target_path = Path(path)
+
+
+        try:
+
+            stat_path = target_path.stat()
+
+
+            if sys.platform.startswith("win"):
+
+                ###
+                ### Windows
+                ###
+
+                try:
+
+                    import win32security # type: ignore
+
+
+                    security_descriptor = win32security.GetFileSecurity(
+                        str(target_path),
+                        win32security.OWNER_SECURITY_INFORMATION |
+                        win32security.GROUP_SECURITY_INFORMATION
+                    )
+
+                    owner_sid = security_descriptor.GetSecurityDescriptorOwner()
+                    group_sid = security_descriptor.GetSecurityDescriptorGroup()
+                    owner_name, owner_domain, _ = win32security.LookupAccountSid(None, owner_sid)
+                    group_name, group_domain, _ = win32security.LookupAccountSid(None, group_sid)
+
+
+                    return {
+                        "owner_name": f"{owner_domain}\\{owner_name}",
+                        "group_name": f"{group_domain}\\{group_name}",
+                        "owner_uid": None,
+                        "group_gid": None,
+                    }
+
+                except ImportError:
+                    return {
+                        "owner_name": "Unknown",
+                        "group_name": "Unknown",
+                        "owner_uid": None,
+                        "group_gid": None,
+                    }
+
+            elif sys.platform.startswith(("linux", "darwin")):
+                
+                ###
+                ### Linux / macOS 
+                ###
+
+                import pwd
+                import grp
+
+
+                owner_name = pwd.getpwuid(stat_path.st_uid).pw_name
+                group_name = grp.getgrgid(stat_path.st_gid).gr_name
+                owner_uid = stat_path.st_uid
+                group_gid = stat_path.st_gid
+
+
+                return {
+                    "owner_name": owner_name,
+                    "group_name": group_name,
+                    "owner_uid": owner_uid,
+                    "group_gid": group_gid,
+                }
+            
+            else:
+
+                ###
+                ### Unsupported OS
+                ###
+
+                return {
+                    "owner_name": "Unknown",
+                    "group_name": "Unknown",
+                    "owner_uid": None,
+                    "group_gid": None,
+                }
+            
+        except Exception:
+            return {
+                "owner_name": "Unknown",
+                "group_name": "Unknown",
+                "owner_uid": None,
+                "group_gid": None,
+            }
+
+
+
+    def stat(self, path: str | Path) -> Dict[str, str | int | datetime | None]:
         """
         @overview A method that retrieves filesystem statistics for a file or directory.
 
         :param path {str | Path} - The path to the file or directory.
 
-        :return {Dict[str, str | int]} - A dictionary containing filesystem statistics for the given path.
+        :return {Dict[str, str | int | datetime | None]} - A dictionary containing filesystem statistics for the given path.
 
         :raises {FileNotFoundError} - An exception to raise if the `path` does not exist.
         """
@@ -145,20 +249,56 @@ class PathStat:
             mime_type: Optional[str] = None
 
             if target_path.is_file():
-                mime_type, _ = mimetypes.guess_type(str(target_path))
+                
+                try:
+                    import magic
 
 
-            owner_human_readable = pwd.getpwuid(stat_path.st_uid).pw_name
-            group_human_readable = grp.getgrgid(stat_path.st_gid).gr_name
-            owner_uid = pwd.getpwuid(stat_path.st_uid).pw_uid
-            group_gid = grp.getgrgid(stat_path.st_gid).gr_gid
+                    mime_type = magic.from_file(str(target_path), mime=True)
+
+                except ImportError:
+                    import mimetypes
+
+
+                    # fallback on `mimetypes` if `magic` can not resolve
+                    mime_type, _ = mimetypes.guess_type(str(target_path))
+
+            
+            owner_path_info = self.get_path_owner_and_group(target_path)
+
+            owner_human_readable = owner_path_info["owner_name"]
+            group_human_readable = owner_path_info["group_name"]
+            owner_uid = owner_path_info["owner_uid"]
+            group_gid = owner_path_info["group_gid"]
+
+        except Exception as error:
+            size_bytes = 0
+            flag_size_computing = False
+            mime_type = None
+            owner_human_readable = "Unknown"
+            group_human_readable = "Unknown"
+            owner_uid = None
+            group_gid = None
 
         finally:
             if self._animation:
                 self._animation.stop()
 
+        # Path date (modification, creation)
+        try:
+            created = datetime.fromtimestamp(stat_path.st_ctime)
 
-        info_path_part_1: Dict[str, str | int | datetime] = {
+        except (OSError, OverflowError, ValueError):
+            created = None
+
+        try:
+            modified = datetime.fromtimestamp(stat_path.st_mtime)
+            
+        except (OSError, OverflowError, ValueError):
+            modified = None
+
+
+        info_path_part_1: Dict[str, str | int | datetime | None] = {
             "name": target_path.name,
             "type": "directory" if target_path.is_dir() else "file",
         }
@@ -167,7 +307,7 @@ class PathStat:
         if target_path.is_file():
             info_path_part_1["mimetype"] = mime_type or "Unknown"
 
-        info_path_part_2: Dict[str, str | int | datetime] = {
+        info_path_part_2: Dict[str, str | int | datetime | None] = {
             "size": self._size_convertor(size_bytes),
             "size_ok": "✅" if flag_size_computing else "⚠️",
             "permissions": stat.filemode(stat_path.st_mode),
@@ -175,12 +315,12 @@ class PathStat:
             "group_name": group_human_readable,
             "owner_uid": owner_uid,
             "group_gid": group_gid,
-            "created": datetime.fromtimestamp(stat_path.st_ctime),
-            "modified": datetime.fromtimestamp(stat_path.st_mtime),
+            "created": created,
+            "modified": modified,
             "absolute_path": str(target_path.resolve()),
         }
 
-        info_path: Dict[str, str | int | datetime] = info_path_part_1
+        info_path: Dict[str, str | int | datetime | None] = info_path_part_1
         info_path.update(info_path_part_2)
 
 
