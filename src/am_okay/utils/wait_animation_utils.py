@@ -88,7 +88,7 @@ class WaitAnimation:
             return None
         
 
-        sys.stdout.write("\r" + " " * (len(self._message) + 20) + "\r")
+        sys.stdout.write("\r" + " " * (len(self._message) + 24) + "\r")
         sys.stdout.flush()
 
 
