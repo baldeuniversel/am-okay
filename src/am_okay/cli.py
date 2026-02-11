@@ -13,12 +13,21 @@ import sys
 import argparse
 from pathlib import Path
 from typing import List
+import random
 
 from am_okay.infrastructure.repository.buffer_repository import BufferRepository
-from am_okay.application.prepare_commands import PrepareCopyCommand, PrepareCutCommand, PrepareTransferCommand
+from am_okay.application.prepare_commands import (
+    PrepareCopyCommand, PrepareCutCommand, 
+    PrepareTransferCommand
+)
 from am_okay.application.execute_commands import PasteCommand, StatCommand
 from am_okay.infrastructure.observers.observers import TqdmProgressObserver
 from am_okay.utils.path_utils import normalize_paths
+from am_okay.utils.path_stat_utils import PathStat
+from am_okay.utils.wait_animation_utils import (
+    CircleAnimation, SpinnerAnimation, 
+    IndeterminateBarAnimation
+)
 
 
 
@@ -129,19 +138,28 @@ def main():
     # Slot argument
     parser.add_argument("--slot", type=str, help="Slot index or range for operations")
 
+    #
+    parser.add_argument("--paste", type=str, help="Execute prepared operation(s) to destination")
+
     # Operation flags
     parser.add_argument("--copy", action="store_true", help="Prepare a copy operation")
     parser.add_argument("--cut", action="store_true", help="Prepare a cut operation")
-    parser.add_argument("--paste", type=str, help="Execute prepared operation(s) to destination")
     parser.add_argument("--stat", action="store_true", help="Display prepared operation(s)")
     parser.add_argument("--reset", action="store_true", help="Reset prepared operation(s)")
-
+    parser.add_argument("--info", action="store_true", help="Display filesystem information about files or directories")
 
     # Files/dirs for preparation
     parser.add_argument("paths", nargs="*", help="Source files or directories for prepare operations")
 
 
     args = parser.parse_args()
+
+
+    # List of animation classes
+    animation_classes = [CircleAnimation, SpinnerAnimation, IndeterminateBarAnimation]
+
+    # Random selection of a class
+    choice_animation_class = random.choice(animation_classes)
 
 
     # Exclude some scenarios
@@ -171,12 +189,30 @@ def main():
         
         sys.exit(1)
 
+    if args.info and not args.paths:
+        print("\n ❌  Invalid usage \n"
+            "       `--info` requires at least one file or directory path. \n\n"
+            "✅     Use cases: \n"
+            "         am-okay --info file1.txt dirA \n"
+            "         am-okay --info Downloads"
+        )
+        sys.exit(1)
 
-    # Initialize repository and buffer
+    if args.info and (args.stat or args.copy or args.cut or args.paste or args.reset):
+        print("\n ❌  Invalid usage \n"
+            "       `--info` cannot be combined with other operation flags."
+        )
+        sys.exit(1)
+
+
+    # Initialize repository, buffer, path stat ...
     repo_path = Path.home() / ".am-okay" / "am_okay_buffer_repository.json"
     buffer_repository = BufferRepository(repo_path)
     transfer_buffer = buffer_repository.load()
     progress_observer = TqdmProgressObserver()
+    path_stat = PathStat(
+        animation=choice_animation_class(message="Calculating size")
+    )
 
 
     # Prepare commands
@@ -221,6 +257,28 @@ def main():
 
                 print("\nDefault operation reset  ✅")
 
+
+            sys.exit(0)
+
+
+        # Handle info
+        if args.info:
+
+            try:
+                paths = normalize_paths(args.paths)
+
+            except Exception as err:
+                print(err)
+                sys.exit(1)
+
+            for path in paths:
+
+                info = path_stat.stat(path)
+
+                print(f"\n📄 \033[1;032mPath information\033[0m")
+
+                for key, value in info.items():
+                    print(f"  \033[1;036m{key:<16}\033[0m: \033[1;037m{value}\033[0m")
 
             sys.exit(0)
 
