@@ -1,7 +1,7 @@
 
 [project]
 name = "am-okay"
-version = "1.0.6"
+version = "1.0.7"
 description = "A portable command-line tool for copying and moving files and directories with progress indication."
 authors = [
     {name = "Amadou Baldé", email = "baldeuniversel@protonmail.com"}
