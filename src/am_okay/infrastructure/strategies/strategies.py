@@ -94,6 +94,11 @@ class CopyStrategy(TransferStrategy):
         :param progress_observer {ProgressObserver} - The observer to track transfer progress.
         :param cancel_token {CancellationToken} - The token that allows canceling the transfer.
         """
+
+        #
+        count_total_paths = len(sources)
+        count_current_path = 1
+
         
         for src in sources:
 
@@ -102,7 +107,7 @@ class CopyStrategy(TransferStrategy):
 
 
             # Start progress bar immediately with unknown total for directories
-            progress_observer.on_start(src, target, total_size=1 if src.is_dir() else src.stat().st_size)
+            progress_observer.on_start(src, target, count_current_path, count_total_paths, total_size=1 if src.is_dir() else src.stat().st_size)
 
 
             # If directory, compute total size in background thread
@@ -121,6 +126,10 @@ class CopyStrategy(TransferStrategy):
 
 
             progress_observer.on_complete()
+
+
+            #
+            count_current_path += 1
 
 
 
@@ -198,6 +207,11 @@ class CutStrategy(TransferStrategy):
         :param cancel_token {CancellationToken} - The token that allows canceling the transfer.
         """
 
+        #
+        count_total_paths = len(sources)
+        count_current_path = 1
+
+
         for src in sources:
 
             cancel_token.check_cancel()
@@ -205,7 +219,7 @@ class CutStrategy(TransferStrategy):
 
 
             # Start progress bar with unknown total initially
-            progress_observer.on_start(src, target, total_size=1 if src.is_dir() else src.stat().st_size)
+            progress_observer.on_start(src, target, count_current_path, count_total_paths, total_size=1 if src.is_dir() else src.stat().st_size)
 
 
             # Compute total size in background for directories
@@ -230,6 +244,10 @@ class CutStrategy(TransferStrategy):
 
             # Complete progress bar (set to 100% if still in progress)
             progress_observer.on_complete()
+
+
+            #
+            count_current_path += 1
 
 
 

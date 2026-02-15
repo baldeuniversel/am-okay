@@ -14,12 +14,16 @@ class ProgressObserver(ABC):
 
 
     @abstractmethod
-    def on_start(self, source: Path, destination: Path, total_size: int | None = None) -> None:
+    def on_start(self, source: Path, destination: Path, count_current_path: int, count_total_paths: int, total_size: int | None = None) -> None:
         """
         @overview A method to call when a transfer starts.
 
         :param source {Path} - The source file or directory.
         :param {Path} destination - Target destination path.
+        :param {int} count_current_path - The positioning of the source path in the buffer 
+               repository, based on the slot mode `XOR` the default mode.
+        :param {int} count_total_paths - The total paths in the buffer repository, 
+               based on the slot mode `XOR` the default mode.
         :param total_size {int | None} - The total size in bytes.
         """
 
@@ -74,20 +78,25 @@ class TqdmProgressObserver(ProgressObserver):
     """
 
 
-    def on_start(self, source: Path, destination: Path, total_size: int | None = None) -> None:
+    def on_start(self, source: Path, destination: Path, count_current_path: int, count_total_paths: int, total_size: int | None = None) -> None:
         """
         @overview A method to call when a transfer starts.
 
         :param source {Path} - The source file or directory.
         :param {Path} destination - Target destination path.
+        :param {int} count_current_path - The positioning of the source path in the buffer 
+               repository, based on the slot mode `XOR` the default mode.
+        :param {int} count_total_paths - The total paths in the buffer repository, 
+               based on the slot mode `XOR` the default mode.
         :param total_size {int | None} - The total size in bytes.
         """
 
         terminal_width = get_terminal_width()
-        header_progress_bar = format_transfer_line(source, destination, terminal_width)
+        transfer_ratio_between_current_and_total = f"[ T{count_current_path} / T{count_total_paths} ] "
+        header_progress_bar = format_transfer_line(source, destination, terminal_width, transfer_ratio_between_current_and_total)
 
         tqdm.write("")
-        tqdm.write(header_progress_bar)
+        tqdm.write(f"{transfer_ratio_between_current_and_total}{header_progress_bar}")
 
         
         self._progress_bar = tqdm(total=total_size or 1, unit="B", unit_scale=True, 

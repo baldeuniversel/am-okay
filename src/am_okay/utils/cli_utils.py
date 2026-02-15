@@ -42,7 +42,7 @@ def truncate_middle(text: str, max_len: int) -> str:
 
 
 
-def format_transfer_line(source: Path, destination: Path, width: int) -> str:
+def format_transfer_line(source: Path, destination: Path, width: int, transfer_ratio_between_current_and_total: str) -> str:
     """
     @overview A function that formats a transfer line showing 'source -> destination', 
     truncated to fit terminal width.
@@ -50,12 +50,16 @@ def format_transfer_line(source: Path, destination: Path, width: int) -> str:
     :param {Path} source - The source file or directory.
     :param {Path} destination - The destination file or directory.
     :param {int} width - The max terminal width in characters (counting).
+    :param {str} transfer_ratio_between_current_and_total - The ratio between the current 
+           transfer position number and the total number of transfers to be completed.
 
     :return {str} - The formatted line with source and destination truncated as needed.
     """
 
     arrow = " -> "
-    available = width - len(arrow)
+    the_transfer_ratio_btw_current_and_total = transfer_ratio_between_current_and_total
+
+    available = width - (len(arrow) + len(the_transfer_ratio_btw_current_and_total))
     half = available // 2
 
     src = truncate_middle(str(source), half)
