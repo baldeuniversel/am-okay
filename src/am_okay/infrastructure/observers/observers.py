@@ -92,7 +92,7 @@ class TqdmProgressObserver(ProgressObserver):
         """
 
         terminal_width = get_terminal_width()
-        transfer_ratio_between_current_and_total = f"[ T{count_current_path} / T{count_total_paths} ] "
+        transfer_ratio_between_current_and_total = f"[T{count_current_path} / T{count_total_paths}] "
         header_progress_bar = format_transfer_line(source, destination, terminal_width, transfer_ratio_between_current_and_total)
 
         tqdm.write("")
